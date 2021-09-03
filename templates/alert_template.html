@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Watchlist Alert</title>
+  <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css"> 
+    <link rel="stylesheet" type="text/css" href="{{ css_file }}">
+    <script src="https://code.iconify.design/1/1.0.7/iconify.min.js"></script>
+    <style type="text/css"> 
+    .material-icons.md-18 { font-size: 18px; }
+    .material-icons.md-24 { font-size: 24px; }
+    .material-icons.md-36 { font-size: 36px; }
+    .material-icons.md-48 { font-size: 48px; }
+    .material-icons.success { color: #4caf50 }
+    .material-icons.info { color: #00bcd4 }
+    .material-icons.rose { color: #ea2c6d }
+    .material-icons.warning { color: #ff9800 }
+    .material-icons.primary { color: #ab47bc }
+    .material-icons.danger { color: #f44336 }
+    .material-icons.secondary { color: #6c757d }
+    .material-icons.white { color: #ffffff }
+    </style>
+</head>
+<body>
+<!-- Header -->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" bg-color="#eeeeee">
+		<tr><td style="color:#777777; font-family:Arial, sans-serif; font-size:24px; line-height:24px; text-align:left; padding-left:15px; padding-top:15px;">Management of Care Watchlist</td>
+            <td style="color:#777777; font-family:Arial, sans-serif; font-size:22px; line-height:23px; text-align:right; padding-right:15px; padding-top:15px;"> FYTD {{ current_readable }}</td></tr>
+        <tr><td style="color:#777777; font-family:Arial, sans-serif; font-size:11px; line-height:11px; text-align:left; padding-left:15px; padding-top:15px; padding-bottom:15px;"><i> Values reflect {{ current_readable }} performance, unless otherwise indicated.</i></td></tr>
+     </table>
+<!-- table -->
+<div class="content">
+ <div class="container-fluid">
+   <div class="row">
+     <div class="col-md-12">
+       <div class="card">
+         <div class="card-header card-header-rose">
+             <h2 class="card-title ">Watchlist</h2>
+               <h3 class="card-category"> Facility Metrics to Keep An Eye On.</h3>
+                 </div>
+             <div class="card-body">
+                 <div class="table-responsive">
+                     <table class="table" border-collapse="collapse">	
+                         <thead class="text-primary">		
+                             {% for header in headers %}
+                                <th style="color:#5B5959; font-family:Arial, sans-serif; font-size:14px; line-height:14px; text-align:center; padding:2px; border-bottom: 1px solid #9C9C9C;">{{ header }}</th>
+                                 {% endfor %}
+                            </thead>
+                               <tbody> 
+                                   {% for i,c in data %}
+                                       <tr> 
+                                         <td style="{{ c.Facility }}">{{ i.Facility }}</td>
+                                         <td style="{{ c.Metric }}">{{ i.Metric }}</td>
+                                         <td style="{{ c.Value }}">{{ i.Value }}</td>
+                                         <td style="{{ c.Month_to_Month_Variance }}">{{ i.Month_to_Month_Variance }}</td>
+                                         <td style="{{ c.FYTD }}">{{ i.FYTD }}</td>
+                                         <td style="{{ c.FYTD_Variance }}">{{ i.FYTD_Variance }}</td>
+                                         <td style="{{ c.months_trend }}">{{ i.months_trend }}</td>
+                                         <td align="center"><img src="file:\\\{{ i.plotted }}" width="70px" height="70px"></img></td>
+                                       </tr>
+                                   {% endfor %}
+                             </tbody> 
+                       </table>
+                   </div>
+                </div>
+              <!-- details -->
+              <div class="content">
+                <div class="container-fluid">
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="card">
+                        <div class="card-header card-header-rose">
+                          <h2 class="card-title ">Score Cards</h2>
+                          <h4 class="card-category"></h4>
+                            </div>
+                          <div class="row">
+                              {% for f in range(watchlist_data | length) %}
+                                   <div class="col-md-4">
+                                    <div class="card">
+                                        <div class="card-header card-header-rose">
+                                            <h3 class="card-title">{{ watchlist_data[f][0] }}</h3>
+                                          </div>
+                                        <div class="card-body">
+                                            <table>
+                                                    <tr>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center"><h4><b>{{ current_readable }}</b></td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center"><h4><b>FYTD</b></td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center"><h4><b>3-Mo Trend</b></td>
+                                                    </tr>
+                                                    {% for i in range(1,5) %}
+                                                    <tr>
+                                                        <td><i class="material-icons md-24 rose">looks_{{ icon_integers[i] }}</i></td>
+                                                        <td text-align="center">&nbsp;&nbsp;</td>
+                                                        <td text-align="center"><h4 class="text-secondary"><b>{{watchlist_data[f][i].metric}}</b></h4></td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center">&nbsp;&nbsp;&nbsp;</td>
+                                                        <td text-align="center"><h4><span class={{ watchlist_data[f][i].monthly_class }}><b>{{ watchlist_data[f][i].monthly_value }}</b></span></h4></td>
+                                                        <td text-align="center">&nbsp;&nbsp;</td>
+                                                        <td text-align="center"><h4><span class={{ watchlist_data[f][i].fytd_class }}><b>{{ watchlist_data[f][i].fytd_value }}</b></span></h4></td>
+                                                        <td text-align="center">&nbsp;&nbsp;</td>
+                                                        <td text-align="center"><h4><span class={{ watchlist_data[f][i].trend_class }}><b>{{ watchlist_data[f][i].trend_value }}</b></span></h4></td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </table>
+                                         </div>
+                                      </div>
+                                  </div>
+                               {% endfor %}
+                          </div>
+                     </div>
+                  </div>
+              </div>
+           </div>     
+        </div>   
+    </div>   
+     <!-- footer -->
+        <table align="center">
+            <tr align="center">
+               <td style="color:#666666; bgcolor=#eeeeee; align=center; font-family:Arial, sans-serif; font-size:16px; line-height:16px; text-align:center; border-top: 1px solid #c7c3c3; padding: 0.9075rem 0; padding-bottom:40px; padding-top:10px;"></td>
+               <td style="color:#666666; bgcolor=#eeeeee; align=center; font-family:Arial, sans-serif; font-size:14px; line-height:14px; text-align:center;">Created by <a href="https://www.getpanached.co/" style="text-decoration:underline;">Becca Mayers</a></td>
+           </tr>
+        </table>   
+<!--Core JS Files-->
+<script src="assets/js/core/jquery.min.js"></script>
+<script src="https://code.iconify.design/2/2.0.3/iconify.min.js"></script>
+<script src="H://Mike_and_Jens_Bots/cmd_alert_bot/templates/material-dashboard.css" type="text/javascript"></script>
+</body>
+</html>
