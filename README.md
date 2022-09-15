@@ -1,5 +1,5 @@
 # alert-bot
-Well-designed alert reports on autopilot.
+Alert reports on autopilot.
 This alert bot generates and calculates randomized monthly [care management](https://www.ahrq.gov/ncepcr/care/coordination/mgmt.html) metrics for July 2019 to present along a fictitious facility set named after the [military alphabet](https://en.wikipedia.org/wiki/NATO_phonetic_alphabet). Metrics from any industry are fodder for an alert bot.
 
 # The Goal
